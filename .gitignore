@@ -396,3 +396,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+Combined/**
+!Combined/Combined.csproj
+Expanded/**
+!Expanded/Expanded.csproj

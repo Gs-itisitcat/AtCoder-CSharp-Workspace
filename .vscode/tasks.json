@@ -1,0 +1,122 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "combine",
+            "command": "dotnet-script",
+            "type": "shell",
+            "args": [
+                "./Expander/combine.csx",
+                "--",
+                "${file}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+        },
+        {
+          "label": "copy combined to expanding",
+          "command": "cp",
+          "type": "shell",
+          "args": [
+              "${workspaceFolder}/Combined/${relativeFileDirname}/${fileBasenameNoExtension}_Combined.cs",
+              "${workspaceFolder}/Expander/Program.cs"
+          ],
+          "group": {
+              "kind": "none",
+              "isDefault": false
+          },
+          "presentation": {
+              "reveal": "silent"
+          }
+        },
+        {
+          "label": "remove copied combined after expanding",
+          "command": "rm",
+          "type": "shell",
+          "args": [
+              "${workspaceFolder}/Expander/Program.cs"
+          ],
+          "group": {
+              "kind": "none",
+              "isDefault": false
+          },
+          "presentation": {
+              "reveal": "silent"
+          }
+        },
+        {
+          "label": "do expand",
+          "command": "dotnet-source-expand",
+          "type": "shell",
+          "args": [
+              "./Expander/Program.cs",
+              "-o",
+              "${workspaceFolder}/Expanded/${relativeFileDirname}/${fileBasenameNoExtension}_Expanded.cs"
+          ],
+          "group": {
+              "kind": "none",
+              "isDefault": false
+          },
+          "presentation": {
+              "reveal": "silent"
+          }
+        },
+        {
+            "label": "make expand dir",
+            "command": "mkdir",
+            "type": "shell",
+            "args": [
+                "${workspaceFolder}/Expanded/${relativeFileDirname}",
+                "-force",
+            ],
+            "group": {
+                "kind": "none",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "silent"
+            }
+        },
+        {
+            "label": "expand",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn" :[
+                "copy combined to expanding",
+                "make expand dir",
+                "do expand",
+                "remove copied combined after expanding"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent"
+            }
+        },
+        {
+            "label": "combine and expand",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn" :[
+                "combine",
+                "expand"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent"
+            }
+        }
+    ]
+}
