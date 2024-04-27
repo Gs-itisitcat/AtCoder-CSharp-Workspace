@@ -10,7 +10,7 @@
             "args": [
                 "./Expander/combine.csx",
                 "--",
-                "${file}"
+                "'${file}'"
             ],
             "group": {
                 "kind": "build",
@@ -25,8 +25,8 @@
           "command": "cp",
           "type": "shell",
           "args": [
-              "${workspaceFolder}/Combined/${relativeFileDirname}/${fileBasenameNoExtension}_Combined.cs",
-              "${workspaceFolder}/Expander/Program.cs"
+              "'${workspaceFolder}/Combined/${relativeFileDirname}/${fileBasenameNoExtension}_Combined.cs'",
+              "'${workspaceFolder}/Expander/Program.cs'"
           ],
           "group": {
               "kind": "none",
@@ -41,7 +41,7 @@
           "command": "rm",
           "type": "shell",
           "args": [
-              "${workspaceFolder}/Expander/Program.cs"
+              "'${workspaceFolder}/Expander/Program.cs'"
           ],
           "group": {
               "kind": "none",
@@ -58,7 +58,7 @@
           "args": [
               "./Expander/Program.cs",
               "-o",
-              "${workspaceFolder}/Expanded/${relativeFileDirname}/${fileBasenameNoExtension}_Expanded.cs"
+              "'${workspaceFolder}/Expanded/${relativeFileDirname}/${fileBasenameNoExtension}_Expanded.cs'"
           ],
           "group": {
               "kind": "none",
@@ -73,7 +73,7 @@
             "command": "mkdir",
             "type": "shell",
             "args": [
-                "${workspaceFolder}/Expanded/${relativeFileDirname}",
+                "'${workspaceFolder}/Expanded/${relativeFileDirname}'",
                 "-force",
             ],
             "group": {
